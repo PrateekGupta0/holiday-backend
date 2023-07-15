@@ -32,20 +32,20 @@ public class LeaveManagment {
     private String reason;
 
     @Column(name = "lastUpdated")
-    private Timestamp lastUpdated;
+    private String lastUpdated;
 
     @Column(name = "updatedBy")
     private String updatedBy;
 
     @Column(name = "create")
-    private Timestamp create;
+    private String create;
 //
 //    private String userId;
 
     @Column(name = "status")
     private boolean status;
 
-    public LeaveManagment(String studentId,Date startDate,Date endDate,String reason,Timestamp lastUpdated,String updatedBy,Timestamp create){
+    public LeaveManagment(String studentId,Date startDate,Date endDate,String reason,String lastUpdated,String updatedBy,String create){
         this.studentId=studentId;
         this.startDate=startDate;
         this.endDate=endDate;

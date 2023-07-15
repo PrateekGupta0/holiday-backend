@@ -36,13 +36,13 @@ public class Student {
     private String permanentAddress;
 
     @Column(name = "lastUpdated")
-    private Timestamp lastUpdated;
+    private String lastUpdated;
 
     @Column(name = "updatedBy")
     private String updatedBy;
 
     @Column(name = "create")
-    private Timestamp create;
+    private String create;
 
     @Column(name = "userId")
     private String userId;

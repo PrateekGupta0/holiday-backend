@@ -27,11 +27,11 @@ public class Warden {
     private String permanentAddress;
 
     @Column(name = "lastUpdated")
-    private Timestamp lastUpdated;
+    private String lastUpdated;
 
 //    private String updatedBy;
     @Column(name = "create")
-    private Timestamp create;
+    private String create;
 
 //    private String userId;
 }

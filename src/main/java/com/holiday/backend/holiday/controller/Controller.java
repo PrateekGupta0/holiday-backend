@@ -98,7 +98,7 @@ public class Controller {
             res.put("message","FAILED");
             return  new ResponseEntity(res,HttpStatus.BAD_REQUEST);
         }
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String timestamp = new Timestamp(System.currentTimeMillis()).toString();
         leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"null",timestamp);
 
 
