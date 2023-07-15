@@ -15,7 +15,7 @@ public class Warden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Column(name = "fullName")
     private String fullName;
