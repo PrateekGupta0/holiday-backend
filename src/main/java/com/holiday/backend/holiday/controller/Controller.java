@@ -36,11 +36,9 @@ public class Controller {
     @Autowired
     WardenRepo wardenRepo;
 
-    @Autowired
-    LeaveManagment leaveManagment;
 
-    @Autowired
-    Student student;
+
+
 
     @Autowired
     UserTableRepo userTableRepo;
@@ -99,7 +97,7 @@ public class Controller {
             return  new ResponseEntity(res,HttpStatus.BAD_REQUEST);
         }
         java.util.Date timestamp = new Timestamp(System.currentTimeMillis());
-        leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"null",timestamp);
+        LeaveManagment leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"null",timestamp);
 
 
 
@@ -202,7 +200,7 @@ public class Controller {
         }
         try{
             //Id needed.
-            student= studentRepo.findByStudentId(studentId);
+            Student student= studentRepo.findByStudentId(studentId);
             // Make the modifications to the entity
             student.setFullName(req.getName());
             student.setMobileNo(req.getMobileNo());
