@@ -1,7 +1,10 @@
 package com.holiday.backend.holiday.services;
 
 import io.jsonwebtoken.*;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class JwtTokenService {
 
     private static final String SECRET_KEY = "your-secret-key";
