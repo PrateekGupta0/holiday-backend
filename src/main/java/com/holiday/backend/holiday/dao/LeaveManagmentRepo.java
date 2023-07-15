@@ -8,7 +8,7 @@ import java.util.List;
 public interface LeaveManagmentRepo extends JpaRepository<LeaveManagment,Integer> {
 
     public List<LeaveManagment> findAllByStudentId(String studentId);
-    public List<LeaveManagment> findAllByStatus(String status);
+    public List<LeaveManagment> findAllByStatus(Boolean status);
 
     public List<LeaveManagment> findAllByStudentIdAndStatus(String studentId,boolean status);
 //    Select * from TableName where studentId =" token " && status = "";
