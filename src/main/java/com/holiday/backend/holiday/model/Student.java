@@ -44,8 +44,8 @@ public class Student {
     @Column(name = "createdOn")
     private String createOn;
 
-    @Column(name = "userId")
-    private String userId;
+    @Column(name = "studentId")
+    private String studentId;
 
 
 }
