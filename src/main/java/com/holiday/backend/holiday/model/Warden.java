@@ -30,8 +30,8 @@ public class Warden {
     private String lastUpdated;
 
 //    private String updatedBy;
-    @Column(name = "create")
-    private String create;
+    @Column(name = "createdOn")
+    private String createdOn;
 
 //    private String userId;
 }

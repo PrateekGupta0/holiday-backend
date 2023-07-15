@@ -37,8 +37,8 @@ public class LeaveManagment {
     @Column(name = "updatedBy")
     private String updatedBy;
 
-    @Column(name = "create")
-    private Date create;
+    @Column(name = "createdOn")
+    private Date createdOn;
 //
 //    private String userId;
 
@@ -52,7 +52,7 @@ public class LeaveManagment {
         this.reason=reason;
         this.lastUpdated=lastUpdated;
         this.updatedBy=updatedBy;
-        this.create=create;
+        this.createdOn=create;
         this.status=false;
     }
 }

@@ -31,8 +31,8 @@ public class UserTable {
     @Column(name="updatedBy")
     private String updatedBy;
 
-    @Column(name = "create")
-    private String create;
+    @Column(name = "createdOn")
+    private String createOn;
 
     @Column(name = "userId")
     private String userId;
