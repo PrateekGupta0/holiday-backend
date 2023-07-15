@@ -47,13 +47,13 @@ public class Controller {
 
 
 
-
-    private final JwtTokenService jwtTokenService;
-
     @Autowired
-    public Controller(JwtTokenService jwtTokenService) {
-        this.jwtTokenService = jwtTokenService;
-    }
+    private  JwtTokenService jwtTokenService;
+
+//    @Autowired
+//    public Controller(JwtTokenService jwtTokenService) {
+//        this.jwtTokenService = jwtTokenService;
+//    }
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/login")
