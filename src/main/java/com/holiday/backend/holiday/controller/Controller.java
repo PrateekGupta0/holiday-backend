@@ -47,13 +47,13 @@ public class Controller {
 
 
 
-    @Autowired
+//    @Autowired
     private  JwtTokenService jwtTokenService;
 
-//    @Autowired
-//    public Controller(JwtTokenService jwtTokenService) {
-//        this.jwtTokenService = jwtTokenService;
-//    }
+    @Autowired
+    public Controller(JwtTokenService jwtTokenService) {
+        this.jwtTokenService = jwtTokenService;
+    }
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/login")
@@ -69,7 +69,7 @@ public class Controller {
         }
 
         // Generate the JWT token
-        String token = JwtTokenService.generateToken(loginForm.getUsername());
+        String token = jwtTokenService.generateToken(loginForm.getUsername());
 
         Map<String,Object> map=new HashMap<>();
         map.put("token",token);
@@ -85,7 +85,7 @@ public class Controller {
 
 
         // Access the claims as needed
-        String userId = JwtTokenService.parseToken(token);
+        String userId = jwtTokenService.parseToken(token);
 
         LocalDate startDate=LocalDate.parse(details.getStartDate());
         LocalDate endDate=LocalDate.parse(details.getEndDate());
@@ -125,7 +125,7 @@ public class Controller {
 
 
         // Access the claims as needed
-        String studentId = JwtTokenService.parseToken(token);
+        String studentId = jwtTokenService.parseToken(token);
 
 
         List<LeaveManagment> res;
@@ -154,7 +154,7 @@ public class Controller {
         else if(req == "pending"){
             try {
                 //need to change.
-                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"false");
+                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,false);
                 LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
                 response.put("data",arrlist);
                 response.put("message","SUCCESS");
@@ -169,7 +169,7 @@ public class Controller {
         else if(req == "approved"){
             try {
                 // need to change
-                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"true");
+                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,true);
                 LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
                 response.put("data",arrlist);
                 response.put("message","SUCCESS");
@@ -191,7 +191,7 @@ public class Controller {
 
 
         // Access the claims as needed
-        String studentId = JwtTokenService.parseToken(token);
+        String studentId = jwtTokenService.parseToken(token);
 
 
         Map<String,String> map=new HashMap<>();
@@ -229,7 +229,7 @@ public class Controller {
 
 
         // Access the claims as needed
-        String studentId = JwtTokenService.parseToken(token);
+        String studentId = jwtTokenService.parseToken(token);
 
 
         List<LeaveManagment> res;
@@ -262,7 +262,7 @@ public class Controller {
 
 
         // Access the claims as needed
-        String studentId = JwtTokenService.parseToken(token);
+        String studentId = jwtTokenService.parseToken(token);
 
         List<LeaveManagment> res;
         Map<String,Object> response=new HashMap<>();
