@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+//@Component
 public interface LeaveManagmentRepo extends JpaRepository<LeaveManagment,Integer> {
 
     public List<LeaveManagment> findAllByStudentId(String studentId);
