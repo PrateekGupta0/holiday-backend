@@ -101,7 +101,7 @@ public class Controller {
             return  new ResponseEntity(res,HttpStatus.BAD_REQUEST);
         }
         java.util.Date timestamp = new Timestamp(System.currentTimeMillis());
-        LeaveManagment leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"null",timestamp);
+        LeaveManagment leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"null",timestamp,"pending");
 
 
 
@@ -156,7 +156,7 @@ public class Controller {
         else if(req == "pending"){
             try {
                 //need to change.
-                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,false);
+                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"pending");
                 LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
                 response.put("data",arrlist);
                 response.put("message","SUCCESS");
@@ -171,7 +171,22 @@ public class Controller {
         else if(req == "approved"){
             try {
                 // need to change
-                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,true);
+                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"approved");
+                LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
+                response.put("data",arrlist);
+                response.put("message","SUCCESS");
+            }
+            catch (Exception e){
+//                LeaveManagment[] arrlist = new LeaveManagment[0];
+                response.put("data","null");
+                response.put("message","FAILED");
+                return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        else{
+            try {
+                // need to change
+                res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"denied");
                 LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
                 response.put("data",arrlist);
                 response.put("message","SUCCESS");

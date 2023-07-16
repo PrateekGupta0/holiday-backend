@@ -13,6 +13,6 @@ public interface LeaveManagmentRepo extends JpaRepository<LeaveManagment,Integer
     public List<LeaveManagment> findAllByStudentId(String studentId);
     public List<LeaveManagment> findAllByStatus(Boolean status);
 
-    public List<LeaveManagment> findAllByStudentIdAndStatus(String studentId,boolean status);
+    public List<LeaveManagment> findAllByStudentIdAndStatus(String studentId,String status);
 //    Select * from TableName where studentId =" token " && status = "";
 }
