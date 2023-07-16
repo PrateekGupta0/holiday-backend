@@ -70,6 +70,14 @@ public class Controller {
 
         }
 
+        //Password Check
+        if(userTable.getPassword() != loginForm.getPassword()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("data","null");
+            map.put("message","FAILED");
+            return new ResponseEntity<>(map,HttpStatus.UNAUTHORIZED);
+        }
+
         // Generate the JWT token
         String token = jwtTokenService.generateToken(loginForm.getUsername());
 
@@ -202,8 +210,40 @@ public class Controller {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET ,value = "/student-detail")
+    public ResponseEntity<Map<String,Object>> oldStudentDetail(@RequestHeader("token") String token,@RequestBody StudentModify req){
 
-    @RequestMapping(method = RequestMethod.PUT ,value = "/student-Modify")
+        // Access the claims as needed
+        String studentId = jwtTokenService.parseToken(token);
+
+        Map<String,Object> map=new HashMap<>();
+        if(studentId == "FAILED"){
+            map.put("data","null");
+            map.put("message","FAILED");
+            return new ResponseEntity<>(map,HttpStatus.UNAUTHORIZED);
+        }
+
+        try{
+            Student student= studentRepo.findByStudentId(studentId);
+            String[] arr=new String[3];
+            arr[0]=student.getFullName();
+            arr[1]=student.getMobileNo();
+            arr[2]=student.getPermanentAddress();
+            map.put("data",arr);
+            map.put("message","SUCCESS");
+
+        }
+        catch (Exception e){
+            // Internal server error.
+            map.put("data","null");
+            map.put("message","FAILED");
+            return new ResponseEntity(map,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(map,HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT ,value = "/student-detail")
     public ResponseEntity modifyStudent(@RequestHeader("token") String token,@RequestBody StudentModify req){
 
 
