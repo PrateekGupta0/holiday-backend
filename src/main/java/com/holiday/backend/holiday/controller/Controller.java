@@ -232,11 +232,12 @@ public class Controller {
 
         try{
             Student student= studentRepo.findByStudentId(studentId);
-            String[] arr=new String[3];
-            arr[0]=student.getFullName();
-            arr[1]=student.getMobileNo();
-            arr[2]=student.getPermanentAddress();
-            map.put("data",arr);
+
+            Map<String,String> map1=new HashMap<>();
+            map1.put("name",student.getFullName());
+            map1.put("phoneNumber",student.getMobileNo());
+            map1.put("address",student.getPermanentAddress());
+            map.put("data",map1);
             map.put("message","SUCCESS");
 
         }
