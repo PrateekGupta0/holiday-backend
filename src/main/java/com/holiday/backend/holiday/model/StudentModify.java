@@ -8,7 +8,7 @@ public class StudentModify {
 
     String name;
 
-    String mobileNo;
+    String phoneNumber;
 
-    String permanentAddress;
+    String address;
 }

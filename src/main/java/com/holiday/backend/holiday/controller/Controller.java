@@ -270,8 +270,8 @@ public class Controller {
             Student student= studentRepo.findByStudentId(studentId);
             // Make the modifications to the entity
             student.setFullName(req.getName());
-            student.setMobileNo(req.getMobileNo());
-            student.setPermanentAddress(req.getPermanentAddress());
+            student.setMobileNo(req.getPhoneNumber());
+            student.setPermanentAddress(req.getAddress());
 
             // Save the modified entity back to the database
             studentRepo.save(student);
