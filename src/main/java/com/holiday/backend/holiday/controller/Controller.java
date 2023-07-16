@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
 @RestController
 public class Controller {
 
@@ -294,12 +296,12 @@ public class Controller {
 
 
         // Access the claims as needed
-        String studentId = jwtTokenService.parseToken(token);
+        String wardenId = jwtTokenService.parseToken(token);
 
 
         List<LeaveManagment> res;
         Map<String,Object> response=new HashMap<>();
-        if(studentId == "FAILED"){
+        if(wardenId == "FAILED"){
             response.put("data","null");
             response.put("message","FAILED");
             return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
@@ -322,36 +324,94 @@ public class Controller {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET,value = "/approved")
-    public ResponseEntity<Map<String,Object>> approvedRequest(@RequestHeader("token") String token){
+    @RequestMapping(method = RequestMethod.GET,value = "/all-request")
+    public ResponseEntity<Map<String,Object>> approvedRequest(@RequestHeader("token") String token,@RequestParam(value = "search") String search){
 
 
         // Access the claims as needed
-        String studentId = jwtTokenService.parseToken(token);
+        String wardenId = jwtTokenService.parseToken(token);
 
         List<LeaveManagment> res;
         Map<String,Object> response=new HashMap<>();
 
-        if(studentId == "FAILED"){
+        if(wardenId == "FAILED"){
             response.put("data","null");
             response.put("message","FAILED");
             return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
         }
-        try {
-            //need to change.
-            res = leaveManagmentRepo.findAllByStatus("approved");
-            LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
-            response.put("data",arrlist);
-            response.put("message","SUCCESS");
+        if(search.equals("")){
+            try {
+                //need to change.
+                res = leaveManagmentRepo.findAll();
+                LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
+                response.put("data",arrlist);
+                response.put("message","SUCCESS");
+            }
+            catch (Exception e){
+//            LeaveManagment[] arrlist = new LeaveManagment[0];
+                response.put("data","null");
+                response.put("message","FAILED");
+                return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        else{
+            try {
+                //need to change.
+                res = leaveManagmentRepo.findAllByStudentId(search);
+                LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
+                response.put("data",arrlist);
+                response.put("message","SUCCESS");
+            }
+            catch (Exception e){
+//            LeaveManagment[] arrlist = new LeaveManagment[0];
+                response.put("data","null");
+                response.put("message","FAILED");
+                return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method = RequestMethod.PUT ,value = "/pending")
+    public ResponseEntity<Map<String,Object>> requestAction(@RequestHeader("token") String token,@RequestBody ActionBody actionBody){
+        // Access the claims as needed
+        String wardenId = jwtTokenService.parseToken(token);
+
+        Optional<LeaveManagment> res;
+        Map<String,Object> response=new HashMap<>();
+
+        if(wardenId == "FAILED"){
+            response.put("data","null");
+            response.put("message","FAILED");
+            return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
+        }
+
+        try{
+            int number = Integer.parseInt(actionBody.getId());
+            res=leaveManagmentRepo.findById(number);
+            LeaveManagment temp=res.get();
+
+            String action= actionBody.getAction();
+            if(action.equals("approved")){
+                temp.setStatus("approved");
+            }
+            else{
+                temp.setStatus("denied");
+            }
+
+            leaveManagmentRepo.save(temp);
         }
         catch (Exception e){
-//            LeaveManagment[] arrlist = new LeaveManagment[0];
             response.put("data","null");
             response.put("message","FAILED");
             return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        response.put("data","null");
+        response.put("message","SUCCESS");
+        return new ResponseEntity(response,HttpStatus.OK);
     }
 
 }
