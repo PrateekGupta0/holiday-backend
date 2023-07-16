@@ -113,7 +113,7 @@ public class Controller {
             return  new ResponseEntity(res,HttpStatus.BAD_REQUEST);
         }
         java.util.Date timestamp = new Timestamp(System.currentTimeMillis());
-        LeaveManagment leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"null",timestamp,"pending");
+        LeaveManagment leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"student",timestamp,"pending");
 
 
 
@@ -134,7 +134,7 @@ public class Controller {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET,value = "/student-Request")
+    @RequestMapping(method = RequestMethod.GET,value = "/student-request")
     public ResponseEntity<Map<String,Object>> myRequest(@RequestHeader("token") String token,@RequestParam(value="filter") String req){
 
 
@@ -150,11 +150,14 @@ public class Controller {
             response.put("message","FAILED");
             return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
         }
-        if(req == "all"){
+        if(req.equals("all")){
+//            System.out.println("Entered");
             try {
                 //need to change
                 res = leaveManagmentRepo.findAllByStudentId(studentId);
+//                System.out.println(res.size());
                 LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
+//                System.out.println(arrlist.toString());
                 response.put("data",arrlist);
                 response.put("message","SUCCESS");
             }
@@ -165,7 +168,7 @@ public class Controller {
                 return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        else if(req == "pending"){
+        else if(req.equals("pending")){
             try {
                 //need to change.
                 res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"pending");
@@ -180,7 +183,7 @@ public class Controller {
                 return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        else if(req == "approved"){
+        else if(req.equals("approved")){
             try {
                 // need to change
                 res = leaveManagmentRepo.findAllByStudentIdAndStatus(studentId,"approved");

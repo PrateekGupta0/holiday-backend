@@ -45,6 +45,7 @@ public class LeaveManagment {
     @Column(name = "status")
     private String status;
 
+    public LeaveManagment(){};
     public LeaveManagment(String studentId,Date startDate,Date endDate,String reason,Date lastUpdated,String updatedBy,Date create,String status){
         this.studentId=studentId;
         this.startDate=startDate;
