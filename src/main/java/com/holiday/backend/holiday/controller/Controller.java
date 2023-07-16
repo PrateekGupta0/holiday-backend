@@ -218,7 +218,7 @@ public class Controller {
     }
 
     @RequestMapping(method = RequestMethod.GET ,value = "/student-detail")
-    public ResponseEntity<Map<String,Object>> oldStudentDetail(@RequestHeader("token") String token,@RequestBody StudentModify req){
+    public ResponseEntity<Map<String,Object>> oldStudentDetail(@RequestHeader("token") String token){
 
         // Access the claims as needed
         String studentId = jwtTokenService.parseToken(token);
