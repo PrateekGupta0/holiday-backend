@@ -71,7 +71,9 @@ public class Controller {
         }
 
         //Password Check
-        if(userTable.getPassword() != loginForm.getPassword()){
+        String userPassword=userTable.getPassword();
+        String loginPassword=loginForm.getPassword();
+        if(!userPassword.equals(loginPassword)){
             Map<String,Object> map=new HashMap<>();
             map.put("data","null");
             map.put("message","FAILED");
