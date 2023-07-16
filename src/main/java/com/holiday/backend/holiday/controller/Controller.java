@@ -292,7 +292,7 @@ public class Controller {
 
 
     @RequestMapping(method = RequestMethod.GET,value = "/pending")
-    public ResponseEntity<Map<String,Object>> pendingRequest(@RequestHeader("token") String token){
+    public ResponseEntity<Map<String,Object>> pendingRequest(@RequestHeader("token") String token,@RequestParam(value = "search") String search){
 
 
         // Access the claims as needed
@@ -306,18 +306,35 @@ public class Controller {
             response.put("message","FAILED");
             return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
         }
-        try {
-            //need to change.
-            res = leaveManagmentRepo.findAllByStatus("pending");
-            LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
-            response.put("data",arrlist);
-            response.put("message","SUCCESS");
-        }
-        catch (Exception e){
+        if(search.equals("")){
+            try {
+                //need to change.
+                res = leaveManagmentRepo.findAllByStatus("pending");
+                LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
+                response.put("data",arrlist);
+                response.put("message","SUCCESS");
+            }
+            catch (Exception e){
 //            LeaveManagment[] arrlist = new LeaveManagment[0];
-            response.put("data","null");
-            response.put("message","FAILED");
-            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+                response.put("data","null");
+                response.put("message","FAILED");
+                return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        else{
+            try {
+                //need to change.
+                res = leaveManagmentRepo.findAllByStudentId(search);
+                LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
+                response.put("data",arrlist);
+                response.put("message","SUCCESS");
+            }
+            catch (Exception e){
+//            LeaveManagment[] arrlist = new LeaveManagment[0];
+                response.put("data","null");
+                response.put("message","FAILED");
+                return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
         return new ResponseEntity<>(response,HttpStatus.OK);
