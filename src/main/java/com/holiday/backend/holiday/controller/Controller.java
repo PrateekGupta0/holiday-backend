@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.time.format.DateTimeFormatter;
 @RestController
 public class Controller {
 
@@ -99,8 +99,10 @@ public class Controller {
         // Access the claims as needed
         String userId = jwtTokenService.parseToken(token);
 
-        LocalDate startDate=LocalDate.parse(details.getStartDate());
-        LocalDate endDate=LocalDate.parse(details.getEndDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        LocalDate startDate=LocalDate.parse(details.getStartDate(),formatter);
+        LocalDate endDate=LocalDate.parse(details.getEndDate(),formatter);
         String reason=details.getReason();
 
         if(startDate.isAfter(endDate)){
