@@ -53,6 +53,10 @@ public class Controller {
 //        this.jwtTokenService = jwtTokenService;
 //    }
 
+    @RequestMapping(method = RequestMethod.GET ,value = "/health")
+    public String health(){
+        return "Server is up and running";
+    }
 
     @RequestMapping(method = RequestMethod.POST,value = "/login")
     public ResponseEntity<Map<String,Object>> login(@RequestBody LoginForm loginForm) {
