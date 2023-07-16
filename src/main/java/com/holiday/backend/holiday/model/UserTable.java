@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -26,13 +27,13 @@ public class UserTable {
     private String role;
 
     @Column(name = "lastUpdated")
-    private String lastUpdated;
+    private Date lastUpdated;
 
     @Column(name="updatedBy")
     private String updatedBy;
 
     @Column(name = "createdOn")
-    private String createOn;
+    private Date createOn;
 
     @Column(name = "userId")
     private String userId;

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -27,11 +28,11 @@ public class Warden {
     private String permanentAddress;
 
     @Column(name = "lastUpdated")
-    private String lastUpdated;
+    private Date lastUpdated;
 
 //    private String updatedBy;
     @Column(name = "createdOn")
-    private String createdOn;
+    private Date createdOn;
 
 //    private String userId;
 }
