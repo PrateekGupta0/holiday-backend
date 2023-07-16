@@ -258,7 +258,7 @@ public class Controller {
         }
         try {
             //need to change.
-            res = leaveManagmentRepo.findAllByStatus(false);
+            res = leaveManagmentRepo.findAllByStatus("pending");
             LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
             response.put("data",arrlist);
             response.put("message","SUCCESS");
@@ -291,7 +291,7 @@ public class Controller {
         }
         try {
             //need to change.
-            res = leaveManagmentRepo.findAllByStatus(true);
+            res = leaveManagmentRepo.findAllByStatus("approved");
             LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
             response.put("data",arrlist);
             response.put("message","SUCCESS");
