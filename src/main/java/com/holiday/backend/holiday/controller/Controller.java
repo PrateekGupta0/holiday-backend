@@ -106,8 +106,9 @@ public class Controller {
         LocalDate startDate=LocalDate.parse(details.getStartDate(),formatter);
         LocalDate endDate=LocalDate.parse(details.getEndDate(),formatter);
         String reason=details.getReason();
+        LocalDate currentDate = LocalDate.now();
 
-        if(startDate.isAfter(endDate)){
+        if(startDate.isAfter(endDate) || startDate.isBefore(currentDate)){
             // return enddate is smaller then startDate.
             Map<String,String> res=new HashMap<>();
             res.put("data","null");
@@ -324,7 +325,7 @@ public class Controller {
         else{
             try {
                 //need to change.
-                res = leaveManagmentRepo.findAllByStudentId(search);
+                res = leaveManagmentRepo.findAllByStudentIdAndStatus(search,"pending");
                 LeaveManagment[] arrlist=res.toArray(res.toArray(new LeaveManagment[0]));
                 response.put("data",arrlist);
                 response.put("message","SUCCESS");
