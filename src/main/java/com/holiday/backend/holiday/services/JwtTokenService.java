@@ -9,7 +9,7 @@ public class JwtTokenService {
 
     private static final String SECRET_KEY = "your-secret-key";
 
-    public static String generateToken( String userId) {
+    public String generateToken( String userId) {
 
         return Jwts.builder()
                 .setSubject(userId)
@@ -17,7 +17,7 @@ public class JwtTokenService {
                 .compact();
     }
 
-    public static String parseToken(String token) {
+    public String parseToken(String token) {
 
         try {
             Jws<Claims> jws = Jwts.parser()

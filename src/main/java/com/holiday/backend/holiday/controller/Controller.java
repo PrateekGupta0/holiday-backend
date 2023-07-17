@@ -95,7 +95,7 @@ public class Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/student")
-    public ResponseEntity leaveRequest(@RequestHeader("token") String token,@RequestBody StudentLeaveRequest details){
+    public ResponseEntity<?> leaveRequest(@RequestHeader("token") String token,@RequestBody StudentLeaveRequest details){
 
 
         // Access the claims as needed
@@ -113,7 +113,7 @@ public class Controller {
             Map<String,String> res=new HashMap<>();
             res.put("data","null");
             res.put("message","FAILED");
-            return  new ResponseEntity(res,HttpStatus.BAD_REQUEST);
+            return  new ResponseEntity<>(res,HttpStatus.BAD_REQUEST);
         }
         java.util.Date timestamp = new Timestamp(System.currentTimeMillis());
         LeaveManagment leaveManagment=new LeaveManagment(userId,Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),reason,timestamp,"student",timestamp,"pending");
@@ -127,12 +127,12 @@ public class Controller {
             Map<String,String> res=new HashMap<>();
             res.put("data","null");
             res.put("message","FAILED");
-            return new ResponseEntity(res,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         Map<String,String> res=new HashMap<>();
         res.put("data","null");
         res.put("message","SUCCESS");
-        return  new ResponseEntity(res,HttpStatus.OK);
+        return  new ResponseEntity<>(res,HttpStatus.OK);
 
 
     }
